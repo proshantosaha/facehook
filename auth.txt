@@ -1,0 +1,161 @@
+first create a context api
+----------------------
+create a folder context 
+then create file index.js
+-----------------------------
+
+
+import { createContext } from "react";
+
+const AuthContext = createContext();
+
+export { AuthContext };
+
+
+jeheto context ready then we are create a provider 
+-------------------------------
+
+create a folder providers folder 
+then create authProvider.jsx file
+----------------------------------
+
+
+import { useState } from "react";
+import { AuthContext } from "../context";
+
+const AuthProvider = ({ children }) => {
+  const [auth, setAuth] = useState({});
+  return (
+    <AuthContext.Provider value={{ auth, setAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthProvider;
+----------------------------
+
+auth provider ready 
+------------------------
+
+
+
+then create a hooks useAuth hooks 
+----------------
+
+useAuth.js
+------------
+import React, { useContext, useDebugValue } from "react";
+import { AuthContext } from "../context";
+
+const useAuth = () => {
+  const { auth } = useContext(AuthContext);
+  useDebugValue(auth, (auth) =>
+    auth?.user ? "User logged in" : "user Logged out"
+  );
+  return useContext(AuthContext);
+};
+
+export default useAuth;
+
+
+
+loginFOrm.jsx
+----------------
+
+ekhn amra kaj korbo login hower j information ashe seta nea
+
+set auth k nbo nea user object ta pathaya bdo
+
+    setAuth({ user });
+
+
+ekhn ta check korbo useAuth set hoyece kina 
+eta home page jye consol.log korte hobe context api dara se state ta pathiyeci
+
+console.log(auth)
+
+
+ekhn create korbo privete route
+first create korbo routes name folder
+then we create privetRoutes.jsx file
+
+import Header from "../components/common/Header";
+import useAuth from "../hooks/useAuth";
+import { Navigate, Outlet } from "react-router-dom";
+
+const PrivetRoute = () => {
+  const { auth } = useAuth();
+  return (
+    <>
+      {auth.user ? (
+        <main className="mx-auto max-w-[1020px] py-8">
+          <div className="container">
+            <Header />
+            <Outlet />
+          </div>
+        </main>
+      ) : (
+        <Navigate to="/login" />
+      )}
+    </>
+  );
+};
+
+export default PrivetRoute;
+
+
+
+then route er vitore call korte hobe private route
+
+        <Route element={<PrivetRoute />}></Route>
+
+
+demo
+
+   <Route element={<PrivetRoute />}>
+           <Route element={<HomePage />} path="/" exact />
+          <Route element={<ProfilePage />} path="/me" />
+</Route>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

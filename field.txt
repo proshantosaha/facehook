@@ -1,0 +1,50 @@
+fisrt commponet crete korlam ]
+tarpor er vitore ekta file create korbo, field.jsx name er vitore 
+
+
+field koyeti props nbe (kebek,children,htmlfor,error)
+
+
+dhorun filed holo ekti container typer div,jar modhe lable ache ,sei label  er value ta holo label ,
+childeren holo intput, htmlfor input er vitor htmlfor thake, error ta holo jodi kono error hoy children er pashe jate ami ekta massege dete pari
+
+
+
+vedio 2 - 12min
+
+
+r getchild ekta children nicce ,sei children theke find korce  tar id ta
+
+
+
+
+
+
+
+
+
+import React from "react";
+
+const Field = ({ label, children, htmlFor, error }) => {
+  const id = htmlFor || getChildId(children);
+  return (
+    <div className="form-control">
+      {label && <label htmlFor={id} className="auth-label"></label>}
+      {children}
+      {!!error && (
+        <div role="alert" className="text-red-600">
+          {error.massage}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const getChildId = (children) => {
+  const child = React.Children.only(children);
+  if ("id" in child?.props) {
+    return child.props.id;
+  }
+};
+
+export default Field;
